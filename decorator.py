@@ -2,10 +2,10 @@ import datetime
 import os
 
 
-def get_path(file_path, file_name):
+def decorate_log(file_path, file_name):
     file_place = os.path.join(file_path, file_name)
 
-    def decorate_log(func):
+    def decorate_log_save(func):
         def save_file(*args, **kwargs):
             date = datetime.datetime.now()
             name_func = func.__name__
@@ -16,14 +16,14 @@ def get_path(file_path, file_name):
                     f'функции:{result}\nПуть к файлу:{file_place}')
             return result
 
-        return save_file()
+        return save_file
 
-    return decorate_log
+    return decorate_log_save
 
 
-@get_path('pythonProject1', 'logger.txt')
+@decorate_log('pythonProject1', 'logger.txt')
 def count_numbers(a, b):
-    return a+b
+    return a + b
 
 
 if __name__ == '__main__':
